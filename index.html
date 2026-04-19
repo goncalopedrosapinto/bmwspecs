@@ -3,13 +3,23 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Catálogo BMW - Agrupado</title>
+<title>Catálogo BMW - Pesquisa</title>
 <style>
   body { 
     font-family: system-ui, sans-serif; 
     background: #f3f4f6; 
     padding: 2rem; 
     color: #1f2937;
+  }
+  .barra-pesquisa {
+    width: 100%;
+    max-width: 600px;
+    padding: 1rem;
+    font-size: 1.1rem;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    margin-bottom: 2rem;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
   }
   .grupo-chassis { margin-bottom: 3rem; }
   .grupo-chassis h2 {
@@ -35,11 +45,14 @@
     font-weight: bold;
     font-size: 0.9rem;
   }
+  .aviso-vazio { font-style: italic; color: #6b7280; }
   .erro-msg { color: #dc2626; font-weight: bold; }
 </style>
 </head>
 <body>
   <h1>Catálogo Geral de Viaturas</h1>
+  
+  <input type="text" id="caixa-pesquisa" class="barra-pesquisa" placeholder="Pesquisar por modelo, motor, combustível (ex: Diesel, F70)..." autocomplete="off">
   
   <div id="catalogo">
       </div>
