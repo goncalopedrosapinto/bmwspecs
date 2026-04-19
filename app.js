@@ -1,53 +1,45 @@
 document.addEventListener('DOMContentLoaded', () => {
     
-    // Variável para guardar os dados na memória do navegador
     let dadosGlobais = []; 
 
+    // 1. CARREGAR DADOS
     fetch('dados.json')
         .then(resposta => {
             if (!resposta.ok) throw new Error('Falha ao carregar a base de dados.');
             return resposta.json();
         })
         .then(dados => {
-            dadosGlobais = dados; // Guarda os dados descarregados
-            renderizarCatalogo(dadosGlobais); // Desenha a página inicial com todos os carros
+            dadosGlobais = dados; 
+            renderizarCatalogo(dadosGlobais); 
         })
         .catch(erro => {
             document.getElementById('catalogo').innerHTML = `<p class="erro-msg">Erro: ${erro.message}</p>`;
         });
 
-    // MOTOR DE PESQUISA
+    // 2. MOTOR DE PESQUISA
     const caixaPesquisa = document.getElementById('caixa-pesquisa');
     
     caixaPesquisa.addEventListener('input', (evento) => {
-        // Captura o que foi escrito e converte para minúsculas
         const termoBusca = evento.target.value.toLowerCase().trim();
         
-        // Filtra a matriz global
         const dadosFiltrados = dadosGlobais.filter(carro => {
-            // Cria uma string combinada de todas as propriedades relevantes do carro para pesquisa
             const textoCarro = `${carro.serie} ${carro.chassis} ${carro.versao} ${carro.motor} ${carro.combustivel}`.toLowerCase();
-            
-            // Retorna verdadeiro se o termo de busca existir dentro da string combinada
             return textoCarro.includes(termoBusca);
         });
 
-        // Redesenha o catálogo apenas com os carros filtrados
         renderizarCatalogo(dadosFiltrados);
     });
 
-    // MOTOR DE RENDERIZAÇÃO
+    // 3. MOTOR DE RENDERIZAÇÃO DA GRELHA PRINCIPAL
     function renderizarCatalogo(viaturas) {
         const catalogo = document.getElementById('catalogo');
-        catalogo.innerHTML = ''; // Limpa o estado atual
+        catalogo.innerHTML = ''; 
         
-        // Tratamento de exceção: Pesquisa sem resultados
         if (viaturas.length === 0) {
             catalogo.innerHTML = '<p class="aviso-vazio">Nenhuma viatura corresponde aos critérios de pesquisa.</p>';
             return;
         }
 
-        // Agrupa os carros pelo campo "chassis"
         const carrosAgrupados = viaturas.reduce((grupos, carro) => {
             const chave = carro.chassis;
             if (!grupos[chave]) { grupos[chave] = []; }
@@ -55,7 +47,6 @@ document.addEventListener('DOMContentLoaded', () => {
             return grupos;
         }, {});
 
-        // Constrói o HTML dinâmico
         for (const [chassis, carros] of Object.entries(carrosAgrupados)) {
             const nomeSerie = carros[0].serie; 
             
@@ -73,6 +64,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         <p><strong>Combustível:</strong> ${carro.combustivel}</p>
                         <p><strong>Potência:</strong> ${carro.potencia}</p>
                         <p><strong>Tração:</strong> ${carro.tracao}</p>
+                        <button class="btn-ver-mais" onclick="abrirModal('${carro.id}')">Ver Especificações Completas</button>
                     </div>
                 `;
             });
@@ -81,4 +73,44 @@ document.addEventListener('DOMContentLoaded', () => {
             catalogo.innerHTML += htmlSecao;
         }
     }
+
+    // 4. LÓGICA DA JANELA MODAL (DETALHES)
+    const modal = document.getElementById('modal');
+    const btnFechar = document.getElementById('btn-fechar-modal');
+
+    // Função exposta globalmente para abrir a janela
+    window.abrirModal = function(idCarro) {
+        const carro = dadosGlobais.find(c => c.id === idCarro);
+        if (!carro) return;
+
+        document.getElementById('modal-titulo').innerText = `${carro.serie} ${carro.versao} (${carro.chassis})`;
+        
+        const listaDetalhes = document.getElementById('modal-lista-detalhes');
+        listaDetalhes.innerHTML = ''; 
+
+        for (const [chave, valor] of Object.entries(carro)) {
+            // Esconde campos de sistema da visualização do utilizador
+            if (chave === 'id' || chave === 'serie' || chave === 'chassis' || chave === 'versao') continue;
+
+            // Transforma "peso_tara_kg" em "Peso Tara Kg"
+            const chaveFormatada = chave.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+
+            listaDetalhes.innerHTML += `
+                <tr>
+                    <th>${chaveFormatada}</th>
+                    <td><strong>${valor || 'N/D'}</strong></td>
+                </tr>
+            `;
+        }
+
+        modal.style.display = 'flex';
+    };
+
+    // Fechar modal no botão X
+    btnFechar.addEventListener('click', () => modal.style.display = 'none');
+    
+    // Fechar modal clicando fora da caixa branca
+    modal.addEventListener('click', (evento) => {
+        if (evento.target === modal) modal.style.display = 'none';
+    });
 });
