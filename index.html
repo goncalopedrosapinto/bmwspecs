@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Catálogo BMW - Agrupado</title>
+<style>
+  body { 
+    font-family: system-ui, sans-serif; 
+    background: #f3f4f6; 
+    padding: 2rem; 
+    color: #1f2937;
+  }
+  .grupo-chassis { margin-bottom: 3rem; }
+  .grupo-chassis h2 {
+    border-bottom: 2px solid #111827;
+    padding-bottom: 0.5rem;
+    margin-bottom: 1.5rem;
+  }
+  .grid { 
+    display: grid; 
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); 
+    gap: 1.5rem; 
+  }
+  .cartao { 
+    background: white; 
+    padding: 1.5rem; 
+    border-radius: 8px; 
+    border: 1px solid #e5e7eb;
+  }
+  .tag-motor {
+    background: #e5e7eb;
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    font-weight: bold;
+    font-size: 0.9rem;
+  }
+  .erro-msg { color: #dc2626; font-weight: bold; }
+</style>
+</head>
+<body>
+  <h1>Catálogo Geral de Viaturas</h1>
+  
+  <div id="catalogo">
+      </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
