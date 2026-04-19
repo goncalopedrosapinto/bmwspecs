@@ -3,182 +3,58 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Catálogo BMW - Filtros Avançados</title>
+<title>BMW Technical Database</title>
 <style>
-  body { 
-    font-family: system-ui, sans-serif; 
-    background: #f3f4f6; 
-    padding: 2rem; 
-    color: #1f2937;
-    margin: 0;
-  }
+  :root { --bmw-blue: #0066b1; --dark: #111827; --gray: #6b7280; }
+  body { font-family: 'Segoe UI', system-ui, sans-serif; background: #f3f4f6; margin: 0; color: var(--dark); }
   
-  /* Área de Pesquisa e Filtros */
-  .painel-controlo {
-    background: white;
-    padding: 1.5rem;
-    border-radius: 8px;
-    border: 1px solid #d1d5db;
-    margin-bottom: 2rem;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-  }
-  .barra-pesquisa {
-    width: 100%;
-    box-sizing: border-box;
-    padding: 1rem;
-    font-size: 1.1rem;
-    border: 1px solid #d1d5db;
-    border-radius: 8px;
-    margin-bottom: 1.5rem;
-  }
-  .painel-filtros {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 2rem;
-  }
-  .grupo-filtro {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-  .filtro-titulo {
-    font-size: 0.85rem;
-    text-transform: uppercase;
-    font-weight: bold;
-    color: #6b7280;
-    letter-spacing: 0.05em;
-  }
-  .botoes-filtro {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-  }
-  .btn-filtro {
-    background: #f3f4f6;
-    border: 1px solid #d1d5db;
-    padding: 0.5rem 1rem;
-    border-radius: 9999px;
-    font-size: 0.9rem;
-    color: #374151;
-    cursor: pointer;
-    transition: all 0.2s;
-  }
-  .btn-filtro:hover { background: #e5e7eb; }
-  .btn-filtro.ativo {
-    background: #111827;
-    color: white;
-    border-color: #111827;
-  }
+  /* Vista de Listagem */
+  #vista-lista { padding: 2rem; }
+  .cabecalho { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; }
+  .barra-pesquisa { width: 100%; max-width: 500px; padding: 0.8rem; border: 1px solid #d1d5db; border-radius: 6px; font-size: 1rem; }
+  
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem; }
+  .cartao { background: white; padding: 1.5rem; border-radius: 8px; border: 1px solid #e5e7eb; cursor: pointer; transition: 0.2s; position: relative; }
+  .cartao:hover { transform: translateY(-4px); box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); }
+  
+  /* Vista de Detalhes (Nova Página) */
+  #vista-detalhes { display: none; background: white; min-height: 100vh; padding: 2rem; box-sizing: border-box; }
+  .btn-voltar { background: var(--dark); color: white; border: none; padding: 0.8rem 1.5rem; border-radius: 4px; cursor: pointer; font-weight: bold; margin-bottom: 2rem; }
+  .header-info { border-bottom: 4px solid var(--bmw-blue); padding-bottom: 1rem; margin-bottom: 2rem; }
+  
+  .tabela-tecnica { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+  .tabela-tecnica tr:nth-child(even) { background: #f9fafb; }
+  .tabela-tecnica td { padding: 1rem; border-bottom: 1px solid #eee; font-size: 0.95rem; }
+  .label-tecnica { font-weight: 600; color: var(--gray); width: 45%; }
+  .valor-tecnico { font-weight: 700; color: var(--dark); }
 
-  /* Grelha e Cartões */
-  .grupo-chassis { margin-bottom: 3rem; }
-  .grupo-chassis h2 {
-    border-bottom: 2px solid #111827;
-    padding-bottom: 0.5rem;
-    margin-bottom: 1.5rem;
-  }
-  .grid { 
-    display: grid; 
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); 
-    gap: 1.5rem; 
-  }
-  .cartao { 
-    background: white; 
-    padding: 1.5rem; 
-    border-radius: 8px; 
-    border: 1px solid #e5e7eb;
-    display: flex;
-    flex-direction: column;
-  }
-  .cartao p { margin: 0.3rem 0; font-size: 0.95rem; }
-  .tag-motor {
-    background: #e5e7eb;
-    padding: 0.2rem 0.5rem;
-    border-radius: 4px;
-    font-weight: bold;
-    font-size: 0.9rem;
-  }
-  .tag-combustivel {
-    display: inline-block;
-    padding: 0.2rem 0.6rem;
-    border-radius: 9999px;
-    font-size: 0.75rem;
-    font-weight: bold;
-    margin-bottom: 1rem;
-    align-self: flex-start;
-  }
-  .tag-gasolina { background: #fee2e2; color: #991b1b; }
-  .tag-diesel { background: #fef9c3; color: #854d0e; }
-  .tag-phev { background: #e0e7ff; color: #3730a3; }
-  .tag-bev { background: #dcfce7; color: #166534; }
-  
-  .aviso-vazio { font-style: italic; color: #6b7280; }
-  .erro-msg { color: #dc2626; font-weight: bold; }
-  
-  .btn-ver-mais {
-    margin-top: 1.5rem; padding: 0.75rem; background: #111827; color: white;
-    border: none; border-radius: 4px; cursor: pointer; font-weight: bold; transition: background 0.2s;
-  }
-  .btn-ver-mais:hover { background: #374151; }
-
-  /* Janela Modal */
-  .modal-overlay {
-    display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(0, 0, 0, 0.6); justify-content: center; align-items: center; z-index: 1000;
-  }
-  .modal-conteudo {
-    background: white; width: 90%; max-width: 800px; max-height: 85vh;
-    border-radius: 8px; padding: 2rem; overflow-y: auto; position: relative;
-    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
-  }
-  .btn-fechar {
-    position: absolute; top: 1rem; right: 1rem; background: #ef4444; color: white;
-    border: none; padding: 0.5rem 1rem; border-radius: 4px; cursor: pointer; font-weight: bold;
-  }
-  .btn-fechar:hover { background: #dc2626; }
-  .tabela-detalhes { width: 100%; border-collapse: collapse; margin-top: 1.5rem; }
-  .tabela-detalhes th, .tabela-detalhes td { text-align: left; padding: 0.75rem; border-bottom: 1px solid #e5e7eb; font-size: 0.95rem; }
-  .tabela-detalhes th { width: 45%; color: #4b5563; font-weight: 500; }
+  /* Etiquetas de Combustível */
+  .tag { display: inline-block; padding: 0.2rem 0.6rem; border-radius: 4px; font-size: 0.7rem; font-weight: 800; margin-bottom: 0.5rem; text-transform: uppercase; }
+  .BEV { background: #dcfce7; color: #166534; }
+  .PHEV { background: #e0e7ff; color: #3730a3; }
+  .Diesel { background: #fef9c3; color: #854d0e; }
+  .Gasolina { background: #fee2e2; color: #991b1b; }
 </style>
 </head>
 <body>
-  <h1>Catálogo Geral de Viaturas</h1>
-  
-  <div class="painel-controlo">
-    <input type="text" id="caixa-pesquisa" class="barra-pesquisa" placeholder="Pesquisar por modelo, combustível, tração, bateria, peso..." autocomplete="off">
-    
-    <div class="painel-filtros">
-      <div class="grupo-filtro">
-        <span class="filtro-titulo">Combustível</span>
-        <div class="botoes-filtro">
-          <button class="btn-filtro" data-categoria="combustivel" data-valor="gasolina">Gasolina</button>
-          <button class="btn-filtro" data-categoria="combustivel" data-valor="diesel">Diesel</button>
-          <button class="btn-filtro" data-categoria="combustivel" data-valor="phev">Híbrido (PHEV)</button>
-          <button class="btn-filtro" data-categoria="combustivel" data-valor="bev">Elétrico (BEV)</button>
-        </div>
-      </div>
 
-      <div class="grupo-filtro">
-        <span class="filtro-titulo">Tração</span>
-        <div class="botoes-filtro">
-          <button class="btn-filtro" data-categoria="tracao" data-valor="dianteira">Dianteira</button>
-          <button class="btn-filtro" data-categoria="tracao" data-valor="traseira">Traseira</button>
-          <button class="btn-filtro" data-categoria="tracao" data-valor="integral">Integral (xDrive)</button>
-        </div>
-      </div>
+  <div id="vista-lista">
+    <div class="cabecalho">
+      <h1>Catálogo Técnico BMW</h1>
+      <input type="text" id="input-pesquisa" class="barra-pesquisa" placeholder="Pesquisar por modelo, motor, chassis...">
     </div>
+    <div id="catalogo-grid" class="grid"></div>
   </div>
-  
-  <div id="catalogo"></div>
 
-  <div id="modal" class="modal-overlay">
-    <div class="modal-conteudo">
-      <button id="btn-fechar-modal" class="btn-fechar">Fechar X</button>
-      <h2 id="modal-titulo">Título</h2>
-      <table class="tabela-detalhes">
-        <tbody id="modal-lista-detalhes"></tbody>
-      </table>
+  <div id="vista-detalhes">
+    <button class="btn-voltar" onclick="fecharDetalhes()">← Voltar ao Catálogo</button>
+    <div class="header-info">
+      <h1 id="detalhe-nome" style="margin:0">Nome do Modelo</h1>
+      <div id="detalhe-subtitulo" style="color:var(--gray); margin-top:0.5rem">Série / Chassis</div>
     </div>
+    <table class="tabela-tecnica">
+      <tbody id="detalhe-tabela-corpo"></tbody>
+    </table>
   </div>
 
   <script src="app.js"></script>
