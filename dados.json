@@ -4,49 +4,63 @@
     "serie": "Série 1",
     "chassis": "F70",
     "versao": "116",
-    "motor": "1.5L 3-Cil",
+    "motor": "B38A15U2 (1.5L 3-Cil)",
     "combustivel": "Gasolina",
     "potencia": "122 cv",
-    "tracao": "Tração Dianteira"
+    "tracao": "Tração Dianteira",
+    "peso_tara_kg": "1390"
   },
   {
     "id": "f70-120",
     "serie": "Série 1",
     "chassis": "F70",
     "versao": "120",
-    "motor": "1.5L 3-Cil MHEV",
+    "motor": "B38A15M2 (1.5L 3-Cil MHEV)",
     "combustivel": "Gasolina",
     "potencia": "170 cv",
-    "tracao": "Tração Dianteira"
+    "tracao": "Tração Dianteira",
+    "peso_tara_kg": "1425",
+    "peso_bruto_kg": "1990",
+    "peso_max_rebocavel_8_perc_kg": "1300",
+    "relacao_transmissao_1a": "16.324",
+    "relacao_transmissao_2a": "9.573",
+    "numero_de_portas": "5",
+    "bateria_alta_tensao_capacidade_bruta_kwh": "0.9",
+    "bateria_alta_tensao_tecnologia": "Li-Ion LFP",
+    "bateria_alta_tensao_local_instalacao": "Gepäckraum (Mala)",
+    "tensao_bateria_alta_tensao_V": "43.9"
   },
   {
     "id": "f70-123x",
     "serie": "Série 1",
     "chassis": "F70",
     "versao": "123 xDrive",
-    "motor": "2.0L 4-Cil MHEV",
+    "motor": "B48A20M2 (2.0L 4-Cil MHEV)",
     "combustivel": "Gasolina",
     "potencia": "218 cv",
-    "tracao": "Tração Integral"
+    "tracao": "Tração Integral",
+    "peso_tara_kg": "1530"
   },
   {
     "id": "f70-m135",
     "serie": "Série 1",
     "chassis": "F70",
     "versao": "M135 xDrive",
-    "motor": "2.0L 4-Cil",
+    "motor": "B48A20T2 (2.0L 4-Cil)",
     "combustivel": "Gasolina",
     "potencia": "300 cv",
-    "tracao": "Tração Integral"
+    "tracao": "Tração Integral",
+    "peso_tara_kg": "1550"
   },
   {
     "id": "f70-118d",
     "serie": "Série 1",
     "chassis": "F70",
     "versao": "118d",
-    "motor": "2.0L 4-Cil",
+    "motor": "B47C20U2 (2.0L 4-Cil)",
     "combustivel": "Diesel",
     "potencia": "150 cv",
-    "tracao": "Tração Dianteira"
+    "tracao": "Tração Dianteira",
+    "peso_tara_kg": "1465"
   }
 ]
