@@ -3,13 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Catálogo BMW - Pesquisa</title>
+<title>Catálogo BMW - Pesquisa e Detalhes</title>
 <style>
   body { 
     font-family: system-ui, sans-serif; 
     background: #f3f4f6; 
     padding: 2rem; 
     color: #1f2937;
+    margin: 0;
   }
   .barra-pesquisa {
     width: 100%;
@@ -37,6 +38,8 @@
     padding: 1.5rem; 
     border-radius: 8px; 
     border: 1px solid #e5e7eb;
+    display: flex;
+    flex-direction: column;
   }
   .tag-motor {
     background: #e5e7eb;
@@ -47,6 +50,68 @@
   }
   .aviso-vazio { font-style: italic; color: #6b7280; }
   .erro-msg { color: #dc2626; font-weight: bold; }
+  
+  .btn-ver-mais {
+    margin-top: auto; 
+    padding: 0.75rem;
+    background: #111827; 
+    color: white;
+    border: none; 
+    border-radius: 4px; 
+    cursor: pointer;
+    font-weight: bold;
+    transition: background 0.2s;
+  }
+  .btn-ver-mais:hover {
+    background: #374151;
+  }
+
+  /* Estilos da Janela Modal */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  .modal-conteudo {
+    background: white;
+    width: 90%;
+    max-width: 800px;
+    max-height: 85vh;
+    border-radius: 8px;
+    padding: 2rem;
+    overflow-y: auto;
+    position: relative;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+  }
+  .btn-fechar {
+    position: absolute;
+    top: 1rem; right: 1rem;
+    background: #ef4444; color: white;
+    border: none; padding: 0.5rem 1rem;
+    border-radius: 4px; cursor: pointer;
+    font-weight: bold;
+  }
+  .btn-fechar:hover { background: #dc2626; }
+  .tabela-detalhes {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1.5rem;
+  }
+  .tabela-detalhes th, .tabela-detalhes td {
+    text-align: left;
+    padding: 0.75rem;
+    border-bottom: 1px solid #e5e7eb;
+    font-size: 0.95rem;
+  }
+  .tabela-detalhes th {
+    width: 45%;
+    color: #4b5563;
+    font-weight: 500;
+  }
 </style>
 </head>
 <body>
@@ -56,6 +121,17 @@
   
   <div id="catalogo">
       </div>
+
+  <div id="modal" class="modal-overlay">
+    <div class="modal-conteudo">
+      <button id="btn-fechar-modal" class="btn-fechar">Fechar X</button>
+      <h2 id="modal-titulo">Título da Viatura</h2>
+      <table class="tabela-detalhes">
+        <tbody id="modal-lista-detalhes">
+          </tbody>
+      </table>
+    </div>
+  </div>
 
   <script src="app.js"></script>
 </body>
