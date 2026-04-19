@@ -1,0 +1,52 @@
+[
+  {
+    "id": "f70-116",
+    "serie": "Série 1",
+    "chassis": "F70",
+    "versao": "116",
+    "motor": "1.5L 3-Cil",
+    "combustivel": "Gasolina",
+    "potencia": "122 cv",
+    "tracao": "Tração Dianteira"
+  },
+  {
+    "id": "f70-120",
+    "serie": "Série 1",
+    "chassis": "F70",
+    "versao": "120",
+    "motor": "1.5L 3-Cil MHEV",
+    "combustivel": "Gasolina",
+    "potencia": "170 cv",
+    "tracao": "Tração Dianteira"
+  },
+  {
+    "id": "f70-123x",
+    "serie": "Série 1",
+    "chassis": "F70",
+    "versao": "123 xDrive",
+    "motor": "2.0L 4-Cil MHEV",
+    "combustivel": "Gasolina",
+    "potencia": "218 cv",
+    "tracao": "Tração Integral"
+  },
+  {
+    "id": "f70-m135",
+    "serie": "Série 1",
+    "chassis": "F70",
+    "versao": "M135 xDrive",
+    "motor": "2.0L 4-Cil",
+    "combustivel": "Gasolina",
+    "potencia": "300 cv",
+    "tracao": "Tração Integral"
+  },
+  {
+    "id": "f70-118d",
+    "serie": "Série 1",
+    "chassis": "F70",
+    "versao": "118d",
+    "motor": "2.0L 4-Cil",
+    "combustivel": "Diesel",
+    "potencia": "150 cv",
+    "tracao": "Tração Dianteira"
+  }
+]
