@@ -1,72 +1,52 @@
 [
   {
-    "id": "g26bev-i4-m60",
-    "serie": "BMW i4",
-    "chassis": "G26 BEV",
-    "versao": "i4 M60 xDrive",
-    "tipo": "BEV",
-    "specs": {
-      "Descrição do motor": "XE2A02N1",
-      "Potência combinada comunicada, cv": "544",
-      "Binário combinado comunicado, Nm": "795",
-      "0-100Km/h, seg.": "3.9",
-      "Velocidade máxima, km/h": "225",
-      "Bateria de Alta Tensão - Capacidade energética (bruta), kWh": "83.9",
-      "Capacidade líquida da bateria de alta tensão, kWh": "81.3",
-      "Potência máxima de carregamento DC, kW": "205",
-      "Tara (com o condutor), kg": "2290",
-      "Tipo de transmissão": "automatic",
-      "Tipo de motor": "Four-wheel drive"
-    }
-  },
-  {
-    "id": "g09-xm-label",
-    "serie": "BMW XM",
-    "chassis": "G09",
-    "versao": "XM Label Red",
-    "tipo": "PHEV",
-    "specs": {
-      "Descrição do motor": "XB1161T0",
-      "Potência combinada comunicada, cv": "748",
-      "Binário combinado comunicado, Nm": "1000",
-      "0-100 km/h, seg.": "3.8",
-      "Velocidade máxima em modo puramente elétrico, km/h": "140",
-      "Bateria de Alta Tensão - Capacidade energética (bruta), kWh": "29.5",
-      "Capacidade líquida da bateria de alta tensão, kWh": "25.7",
-      "Volume do depósito de combustível (aprox.), l": "69",
-      "Tara (com o condutor), kg": "2785",
-      "Tipo de motor": "AWD"
-    }
-  },
-  {
-    "id": "f70-120d",
-    "serie": "BMW Série 1",
+    "id": "f70-120",
+    "serie": "Série 1",
     "chassis": "F70",
-    "versao": "120d",
-    "tipo": "Diesel",
-    "specs": {
-      "Descrição do motor": "B47C20U2",
-      "Potência (potência nominal), cv": "163",
-      "0-100 km/h, seg.": "7.9",
-      "ICE - Número de relações de transmissão": "7",
-      "Tipo de motor": "Front-wheel drive",
-      "Tara (sem o condutor), kg": "1495",
-      "Bateria de Alta Tensão - Capacidade energética (bruta), kWh": "0.9"
-    }
+    "versao": "120",
+    "motor": "B38A15M2",
+    "combustivel": "Gasolina",
+    "tracao": "Tração Dianteira",
+    "ano": "2024",
+    "mes": "Junho",
+    "potencia": "170 cv",
+    "aceleracao_0_100": "7.8 s"
   },
   {
-    "id": "g60-i5-e40",
-    "serie": "BMW Série 5",
+    "id": "g60-i5-m60",
+    "serie": "Série 5 Berlina",
     "chassis": "G60",
-    "versao": "i5 eDrive40",
-    "tipo": "BEV",
-    "specs": {
-      "Descrição do motor": "HA0001N1",
-      "Potência combinada comunicada, cv": "340",
-      "0-100Km/h, seg.": "6.0",
-      "Capacidade líquida da bateria de alta tensão, kWh": "81.2",
-      "Potência máxima de carregamento DC, kW": "205",
-      "Tipo de motor": "Rear-wheel drive"
-    }
+    "versao": "i5 M60 xDrive",
+    "motor": "XE2A02N1",
+    "combustivel": "BEV",
+    "tracao": "Tração Integral",
+    "ano": "2024",
+    "mes": "Janeiro",
+    "potencia": "601 cv",
+    "aceleracao_0_100": "3.8 s"
+  },
+  {
+    "id": "g90-m5",
+    "serie": "M5 Berlina",
+    "chassis": "G90",
+    "versao": "M5",
+    "motor": "XB1161T0",
+    "combustivel": "PHEV",
+    "tracao": "Tração Integral",
+    "ano": "2025",
+    "mes": "Março",
+    "potencia": "727 cv",
+    "aceleracao_0_100": "3.5 s"
+  },
+  {
+    "id": "u11-x1-18i",
+    "serie": "X1",
+    "chassis": "U11",
+    "versao": "sDrive18i",
+    "motor": "B38A15M2",
+    "combustivel": "Gasolina",
+    "tracao": "Tração Dianteira",
+    "ano": "2023",
+    "mes": "Outubro"
   }
 ]
