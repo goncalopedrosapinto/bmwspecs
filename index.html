@@ -3,53 +3,91 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BMW Selector - Pro</title>
+    <title>Configurador Técnico BMW</title>
     <style>
         :root { --bmw-blue: #0066b1; --dark: #1c1c1c; --light-gray: #f0f0f0; }
         body { font-family: 'Segoe UI', sans-serif; margin: 0; background: #fafafa; color: var(--dark); }
-        header { background: white; padding: 1rem 2rem; border-bottom: 2px solid var(--bmw-blue); text-align: center; }
+        
+        header { background: white; padding: 1.5rem; border-bottom: 3px solid var(--bmw-blue); text-align: center; }
         
         .seccao-selecao { padding: 1.5rem 2rem; max-width: 1200px; margin: 0 auto; }
         .titulo-seccao { font-size: 0.9rem; font-weight: bold; color: #666; text-transform: uppercase; margin-bottom: 1rem; display: block; }
         
         /* Grelha de Botões */
-        .grid-selecao { display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 10px; margin-bottom: 2rem; }
+        .grid-selecao { display: grid; grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: 10px; margin-bottom: 2rem; }
         .btn-selecao { 
             padding: 15px 10px; border: 1px solid #ddd; background: white; border-radius: 4px; 
-            cursor: pointer; font-weight: bold; transition: 0.2s; text-align: center;
+            cursor: pointer; font-weight: bold; transition: 0.2s; text-align: center; font-size: 0.9rem;
         }
         .btn-selecao:hover { border-color: var(--bmw-blue); color: var(--bmw-blue); }
         .btn-selecao.ativo { background: var(--bmw-blue); color: white; border-color: var(--bmw-blue); }
-        .btn-selecao:disabled { opacity: 0.3; cursor: not-allowed; }
 
-        /* Catalogo */
-        #resultado { padding: 2rem; display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; max-width: 1200px; margin: 0 auto; }
-        .card { background: white; padding: 1.5rem; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); border-top: 4px solid var(--bmw-blue); }
-        .card h3 { margin-top: 0; font-size: 1.2rem; }
-        .detalhe { display: flex; justify-content: space-between; margin-bottom: 5px; font-size: 0.9rem; border-bottom: 1px solid #f0f0f0; padding-bottom: 3px; }
+        /* Catalogo de Resultados */
+        #resultado { padding: 2rem; display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 20px; max-width: 1200px; margin: 0 auto; }
+        .card { background: white; padding: 1.5rem; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); border-top: 5px solid var(--bmw-blue); display: flex; flex-direction: column; }
+        .card h3 { margin: 0 0 1rem 0; font-size: 1.3rem; }
+        .detalhe-rapido { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 0.9rem; border-bottom: 1px solid #f0f0f0; padding-bottom: 4px; }
         
+        .btn-ver-mais { 
+            margin-top: auto; padding: 10px; background: #333; color: white; border: none; 
+            border-radius: 4px; cursor: pointer; font-weight: bold; transition: 0.3s;
+        }
+        .btn-ver-mais:hover { background: var(--bmw-blue); }
+
+        /* Modal */
+        .modal-overlay { 
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+            background: rgba(0,0,0,0.8); z-index: 1000; justify-content: center; align-items: center; 
+        }
+        .modal-content { 
+            background: white; width: 90%; max-width: 650px; max-height: 85vh; border-radius: 8px; 
+            overflow: hidden; display: flex; flex-direction: column; animation: fadeIn 0.3s;
+        }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+        
+        .modal-header { padding: 1.2rem; border-bottom: 2px solid var(--bmw-blue); display: flex; justify-content: space-between; align-items: center; }
+        .modal-body { padding: 1.5rem; overflow-y: auto; flex-grow: 1; }
+        .close-modal { font-size: 2rem; cursor: pointer; background: none; border: none; line-height: 1; }
+
+        .tabela-detalhes { width: 100%; border-collapse: collapse; }
+        .tabela-detalhes tr { border-bottom: 1px solid #eee; }
+        .tabela-detalhes td { padding: 12px 8px; font-size: 0.95rem; }
+        .label-coluna { font-weight: bold; color: #666; width: 45%; text-transform: uppercase; font-size: 0.75rem; }
+        .valor-coluna { font-weight: bold; text-align: right; color: var(--dark); }
+
         .hidden { display: none; }
     </style>
 </head>
 <body>
 
 <header>
-    <h1>Configurador Técnico BMW</h1>
+    <h1>Gestor de Dados Técnicos BMW</h1>
 </header>
 
 <div class="seccao-selecao">
-    <span class="titulo-seccao">1. Selecione o Chassis (Modelo)</span>
+    <span class="titulo-seccao">1. Selecione o Chassis</span>
     <div id="container-chassis" class="grid-selecao">
         </div>
 
     <div id="seccao-versao" class="hidden">
-        <span class="titulo-seccao">2. Selecione a Motorização / Versão</span>
+        <span class="titulo-seccao">2. Selecione a Motorização</span>
         <div id="container-versao" class="grid-selecao">
             </div>
     </div>
 </div>
 
 <div id="resultado"></div>
+
+<div id="modal-detalhes" class="modal-overlay">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2 id="modal-titulo" style="margin:0;">Especificações</h2>
+            <button class="close-modal" onclick="fecharModal()">&times;</button>
+        </div>
+        <div id="modal-corpo" class="modal-body">
+            </div>
+    </div>
+</div>
 
 <script src="app.js"></script>
 </body>
