@@ -1,52 +1,5 @@
 [
-  {
-    "id": "f70-120",
-    "serie": "Série 1",
-    "chassis": "F70",
-    "versao": "120",
-    "motor": "B38A15M2",
-    "combustivel": "Gasolina",
-    "tracao": "Tração Dianteira",
-    "ano": "2024",
-    "mes": "Junho",
-    "potencia": "170 cv",
-    "aceleracao_0_100": "7.8 s"
-  },
-  {
-    "id": "g60-i5-m60",
-    "serie": "Série 5 Berlina",
-    "chassis": "G60",
-    "versao": "i5 M60 xDrive",
-    "motor": "XE2A02N1",
-    "combustivel": "BEV",
-    "tracao": "Tração Integral",
-    "ano": "2024",
-    "mes": "Janeiro",
-    "potencia": "601 cv",
-    "aceleracao_0_100": "3.8 s"
-  },
-  {
-    "id": "g90-m5",
-    "serie": "M5 Berlina",
-    "chassis": "G90",
-    "versao": "M5",
-    "motor": "XB1161T0",
-    "combustivel": "PHEV",
-    "tracao": "Tração Integral",
-    "ano": "2025",
-    "mes": "Março",
-    "potencia": "727 cv",
-    "aceleracao_0_100": "3.5 s"
-  },
-  {
-    "id": "u11-x1-18i",
-    "serie": "X1",
-    "chassis": "U11",
-    "versao": "sDrive18i",
-    "motor": "B38A15M2",
-    "combustivel": "Gasolina",
-    "tracao": "Tração Dianteira",
-    "ano": "2023",
-    "mes": "Outubro"
-  }
+  { "id": "f70-120", "serie": "Série 1", "chassis": "F70", "versao": "120", "motor": "B38A15M2", "combustivel": "Gasolina", "tracao": "Tração Dianteira" },
+  { "id": "g90-m5", "serie": "M5 Berlina", "chassis": "G90", "versao": "M5", "motor": "XB1161T0", "combustivel": "PHEV", "tracao": "Tração Integral" },
+  { "id": "g20-320d", "serie": "Série 3", "chassis": "G20", "versao": "320d", "motor": "B47", "combustivel": "Diesel", "tracao": "Traseira" }
 ]
