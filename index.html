@@ -1,62 +1,73 @@
 <!DOCTYPE html>
 <html lang="pt">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>BMW Technical Database</title>
-<style>
-  :root { --bmw-blue: #0066b1; --dark: #111827; --gray: #6b7280; }
-  body { font-family: 'Segoe UI', system-ui, sans-serif; background: #f3f4f6; margin: 0; color: var(--dark); }
-  
-  /* Vista de Listagem */
-  #vista-lista { padding: 2rem; }
-  .cabecalho { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; }
-  .barra-pesquisa { width: 100%; max-width: 500px; padding: 0.8rem; border: 1px solid #d1d5db; border-radius: 6px; font-size: 1rem; }
-  
-  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem; }
-  .cartao { background: white; padding: 1.5rem; border-radius: 8px; border: 1px solid #e5e7eb; cursor: pointer; transition: 0.2s; position: relative; }
-  .cartao:hover { transform: translateY(-4px); box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); }
-  
-  /* Vista de Detalhes (Nova Página) */
-  #vista-detalhes { display: none; background: white; min-height: 100vh; padding: 2rem; box-sizing: border-box; }
-  .btn-voltar { background: var(--dark); color: white; border: none; padding: 0.8rem 1.5rem; border-radius: 4px; cursor: pointer; font-weight: bold; margin-bottom: 2rem; }
-  .header-info { border-bottom: 4px solid var(--bmw-blue); padding-bottom: 1rem; margin-bottom: 2rem; }
-  
-  .tabela-tecnica { width: 100%; border-collapse: collapse; margin-top: 1rem; }
-  .tabela-tecnica tr:nth-child(even) { background: #f9fafb; }
-  .tabela-tecnica td { padding: 1rem; border-bottom: 1px solid #eee; font-size: 0.95rem; }
-  .label-tecnica { font-weight: 600; color: var(--gray); width: 45%; }
-  .valor-tecnico { font-weight: 700; color: var(--dark); }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Configurador Técnico BMW</title>
+    <style>
+        :root { --bmw-blue: #0066b1; --dark: #1c1c1c; --gray: #f4f4f4; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; background: var(--gray); color: var(--dark); }
+        header { background: white; padding: 1rem 2rem; border-bottom: 3px solid var(--bmw-blue); }
+        
+        .container-filtros { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
+            gap: 1rem; 
+            padding: 2rem; 
+            background: white; 
+            margin: 1rem 2rem; 
+            border-radius: 8px; 
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
 
-  /* Etiquetas de Combustível */
-  .tag { display: inline-block; padding: 0.2rem 0.6rem; border-radius: 4px; font-size: 0.7rem; font-weight: 800; margin-bottom: 0.5rem; text-transform: uppercase; }
-  .BEV { background: #dcfce7; color: #166534; }
-  .PHEV { background: #e0e7ff; color: #3730a3; }
-  .Diesel { background: #fef9c3; color: #854d0e; }
-  .Gasolina { background: #fee2e2; color: #991b1b; }
-</style>
+        .campo-filtro { display: flex; flex-direction: column; gap: 0.5rem; }
+        label { font-size: 0.8rem; font-weight: bold; text-transform: uppercase; color: #666; }
+        select { padding: 0.8rem; border: 1px solid #ddd; border-radius: 4px; font-size: 1rem; cursor: pointer; }
+        select:disabled { background: #eee; cursor: not-allowed; }
+
+        #catalogo { padding: 2rem; display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 2rem; }
+        .cartao { background: white; border-radius: 8px; overflow: hidden; border-left: 5px solid var(--bmw-blue); padding: 1.5rem; transition: transform 0.2s; }
+        .cartao:hover { transform: translateY(-5px); box-shadow: 0 10px 15px rgba(0,0,0,0.1); }
+        .tag { font-size: 0.7rem; font-weight: bold; padding: 0.3rem 0.6rem; border-radius: 4px; background: #eee; margin-right: 0.5rem; }
+        .tag-motor { background: #e3f2fd; color: var(--bmw-blue); }
+        
+        h3 { margin: 0.5rem 0; font-size: 1.4rem; }
+        .detalhes { font-size: 0.9rem; border-top: 1px solid #eee; margin-top: 1rem; padding-top: 1rem; }
+        .detalhes p { margin: 0.4rem 0; display: flex; justify-content: space-between; }
+        .detalhes span { font-weight: bold; }
+
+        .btn-reset { grid-column: 1 / -1; padding: 0.5rem; background: none; border: 1px dashed #ccc; cursor: pointer; color: #888; }
+        .btn-reset:hover { color: var(--bmw-blue); border-color: var(--bmw-blue); }
+    </style>
 </head>
 <body>
 
-  <div id="vista-lista">
-    <div class="cabecalho">
-      <h1>Catálogo Técnico BMW</h1>
-      <input type="text" id="input-pesquisa" class="barra-pesquisa" placeholder="Pesquisar por modelo, motor, chassis...">
-    </div>
-    <div id="catalogo-grid" class="grid"></div>
-  </div>
+<header>
+    <h1>Catálogo Técnico BMW</h1>
+</header>
 
-  <div id="vista-detalhes">
-    <button class="btn-voltar" onclick="fecharDetalhes()">← Voltar ao Catálogo</button>
-    <div class="header-info">
-      <h1 id="detalhe-nome" style="margin:0">Nome do Modelo</h1>
-      <div id="detalhe-subtitulo" style="color:var(--gray); margin-top:0.5rem">Série / Chassis</div>
+<div class="container-filtros">
+    <div class="campo-filtro">
+        <label>Ano</label>
+        <select id="select-ano"><option value="">Todos</option></select>
     </div>
-    <table class="tabela-tecnica">
-      <tbody id="detalhe-tabela-corpo"></tbody>
-    </table>
-  </div>
+    <div class="campo-filtro">
+        <label>Mês</label>
+        <select id="select-mes" disabled><option value="">Selecione o Ano primeiro</option></select>
+    </div>
+    <div class="campo-filtro">
+        <label>Série</label>
+        <select id="select-serie" disabled><option value="">Selecione o Mês primeiro</option></select>
+    </div>
+    <div class="campo-filtro">
+        <label>Versão / Motorização</label>
+        <select id="select-versao" disabled><option value="">Selecione a Série primeiro</option></select>
+    </div>
+    <button class="btn-reset" onclick="resetarFiltros()">Limpar Filtros</button>
+</div>
 
-  <script src="app.js"></script>
+<div id="catalogo"></div>
+
+<script src="app.js"></script>
 </body>
 </html>
