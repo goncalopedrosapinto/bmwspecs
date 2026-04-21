@@ -1,97 +1,85 @@
 document.addEventListener('DOMContentLoaded', () => {
-    let dados = [];
-    let selCat = null;
-    let selChassis = null;
-    let selMotor = null;
+    let baseDados = [];
+    let catSel = '', chassisSel = '', motorSel = '';
 
-    const divChassis = document.getElementById('seccao-chassis');
-    const divMotor = document.getElementById('seccao-motorizacao');
-    const containerResultados = document.getElementById('resultado-lista');
+    const bChassis = document.getElementById('bloco-chassis');
+    const bVersoes = document.getElementById('bloco-versoes');
+    const displayResultado = document.getElementById('resultado');
 
-    // Carregar dados do ficheiro JSON
     fetch('dados.json')
         .then(r => r.json())
-        .then(d => {
-            dados = d;
-        });
+        .then(d => { baseDados = d; });
 
-    window.selecionarCategoria = (cat) => {
-        selCat = cat;
-        selChassis = null;
-        selMotor = null;
+    window.filtrarCat = (cat) => {
+        catSel = cat;
+        chassisSel = ''; motorSel = '';
         
-        // UI
-        atualizarAtivo('btn-group-categoria', `cat-${cat}`);
-        divChassis.classList.remove('hidden');
-        divMotor.classList.add('hidden');
-        containerResultados.innerHTML = "";
+        resetAtivos('grupo-categorias', `cat-${cat}`);
+        bChassis.classList.remove('hidden');
+        bVersoes.classList.add('hidden');
+        displayResultado.innerHTML = '';
 
-        // Popular Chassis
-        const chassisDisponiveis = [...new Set(dados.filter(x => x.categoria === cat).map(x => x.chassis))].sort();
-        const html = chassisDisponiveis.map(c => `<button class="btn-opt" onclick="selecionarChassis('${c}')" id="ch-${c}">${c}</button>`).join('');
-        document.getElementById('btn-group-chassis').innerHTML = html;
+        const lista = [...new Set(baseDados.filter(x => x.categoria === cat).map(x => x.Chassis))].sort();
+        document.getElementById('grupo-chassis').innerHTML = lista.map(c => 
+            `<button class="btn-selecao" onclick="filtrarChassis('${c}')" id="ch-${c}">${c}</button>`
+        ).join('');
     };
 
-    window.selecionarChassis = (chassis) => {
-        selChassis = chassis;
-        selMotor = null;
+    window.filtrarChassis = (chassis) => {
+        chassisSel = chassis;
+        motorSel = '';
 
-        atualizarAtivo('btn-group-chassis', `ch-${chassis}`);
-        divMotor.classList.remove('hidden');
+        resetAtivos('grupo-chassis', `ch-${chassis}`);
+        bVersoes.classList.remove('hidden');
 
-        // Popular Motorizações
-        const motores = dados.filter(x => x.categoria === selCat && x.chassis === chassis);
-        const html = motores.map(m => `<button class="btn-opt" onclick="selecionarMotor('${m.id}')" id="mot-${m.id}">${m.modelo_motorizacao}</button>`).join('');
-        document.getElementById('btn-group-motorizacao').innerHTML = html;
+        const motores = baseDados.filter(x => x.categoria === catSel && x.Chassis === chassis);
+        document.getElementById('grupo-versoes').innerHTML = motores.map(m => 
+            `<button class="btn-selecao" onclick="verCarro('${m.id}')" id="mot-${m.id}">${m.Modelo_Motorizacao}</button>`
+        ).join('');
         
-        renderizarCards();
+        renderCards();
     };
 
-    window.selecionarMotor = (id) => {
-        selMotor = id;
-        atualizarAtivo('btn-group-motorizacao', `mot-${id}`);
-        renderizarCards();
+    window.verCarro = (id) => {
+        motorSel = id;
+        resetAtivos('grupo-versoes', `mot-${id}`);
+        renderCards();
     };
 
-    function renderizarCards() {
-        let filtrados = dados.filter(x => x.categoria === selCat && x.chassis === selChassis);
-        if (selMotor) {
-            filtrados = filtrados.filter(x => x.id === selMotor);
-        }
+    function renderCards() {
+        let filtrados = baseDados.filter(x => x.categoria === catSel && x.Chassis === chassisSel);
+        if(motorSel) filtrados = filtrados.filter(x => x.id === motorSel);
 
-        containerResultados.innerHTML = filtrados.map(v => `
-            <div class="card-viatura">
-                <h3>${v.modelo_motorizacao}</h3>
-                <div class="resumo-item"><span class="resumo-label">Chassis</span><span class="resumo-valor">${v.chassis}</span></div>
-                <div class="resumo-item"><span class="resumo-label">0-100 km/h</span><span class="resumo-valor">${v.0_100_km_h || 'N/D'}</span></div>
-                <div class="resumo-item"><span class="resumo-label">Tração</span><span class="resumo-valor">${v.tracao || 'N/D'}</span></div>
-                <button class="btn-detalhes" onclick="abrirDetalhes('${v.id}')">Ver Mais Especificações</button>
+        displayResultado.innerHTML = filtrados.map(v => `
+            <div class="card">
+                <h2>${v.Modelo_Motorizacao}</h2>
+                <div class="info-linha"><span class="info-label">Chassis</span><span class="info-valor">${v.Chassis}</span></div>
+                <div class="info-linha"><span class="info-label">Potência</span><span class="info-valor">${v.Potencia_CV || v.Potencia_Combinada_CV} CV</span></div>
+                <div class="info-linha"><span class="info-label">0-100 km/h</span><span class="info-valor">${v.Aceleracao_0_100}s</span></div>
+                <button class="btn-ver-mais" onclick="abrirModal('${v.id}')">Especificações Completas</button>
             </div>
         `).join('');
     }
 
-    window.abrirDetalhes = (id) => {
-        const v = dados.find(x => x.id === id);
-        const corpo = document.getElementById('modal-corpo');
+    window.abrirModal = (id) => {
+        const v = baseDados.find(x => x.id === id);
+        document.getElementById('modal-titulo').innerText = v.Modelo_Motorizacao;
         
-        let html = `<table class="tabela-full">`;
-        Object.entries(v).forEach(([chave, valor]) => {
-            if (chave === 'id') return;
-            const label = chave.replace(/_/g, ' ');
-            html += `<tr><td class="col-key">${label}</td><td class="col-val">${valor || '---'}</td></tr>`;
+        let html = `<table class="tabela-specs">`;
+        Object.entries(v).forEach(([key, val]) => {
+            if(['id', 'categoria'].includes(key)) return;
+            html += `<tr><td class="spec-key">${key.replace(/_/g, ' ')}</td><td class="spec-val">${val || '---'}</td></tr>`;
         });
         html += `</table>`;
         
-        corpo.innerHTML = html;
-        document.getElementById('modal-container').style.display = 'flex';
+        document.getElementById('modal-corpo').innerHTML = html;
+        document.getElementById('modal').style.display = 'flex';
     };
 
-    window.fecharModal = () => {
-        document.getElementById('modal-container').style.display = 'none';
-    };
+    window.fecharModal = () => { document.getElementById('modal').style.display = 'none'; };
 
-    function atualizarAtivo(groupId, activeId) {
-        document.querySelectorAll(`#${groupId} .btn-opt`).forEach(b => b.classList.remove('ativo'));
-        document.getElementById(activeId).classList.add('ativo');
+    function resetAtivos(pai, ativo) {
+        document.querySelectorAll(`#${pai} .btn-selecao`).forEach(b => b.classList.remove('ativo'));
+        document.getElementById(ativo).classList.add('ativo');
     }
 });
