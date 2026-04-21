@@ -3,56 +3,54 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BMW Tech Specs - BEV | PHEV | M</title>
+    <title>BMW Technical Selector</title>
     <style>
-        :root { --bmw-blue: #0066b1; --bmw-dark: #1c1c1c; --light-gray: #f4f4f4; }
-        body { font-family: 'Segoe UI', Tahoma, sans-serif; margin: 0; background: var(--light-gray); color: var(--bmw-dark); }
+        :root { --bmw-blue: #0066b1; --bmw-dark: #1c1c1c; --bg: #f2f2f2; }
+        body { font-family: 'Segoe UI', Arial, sans-serif; margin: 0; background: var(--bg); color: var(--bmw-dark); }
         
-        header { background: white; padding: 20px; border-bottom: 3px solid var(--bmw-blue); text-align: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-        h1 { margin: 0; font-size: 1.5rem; text-transform: uppercase; letter-spacing: 1px; }
+        header { background: white; padding: 20px; border-bottom: 4px solid var(--bmw-blue); text-align: center; }
+        h1 { margin: 0; font-size: 1.4rem; text-transform: uppercase; letter-spacing: 2px; }
 
-        .container { max-width: 1200px; margin: 20px auto; padding: 0 20px; }
-        
-        .seccao-filtro { background: white; padding: 20px; border-radius: 8px; margin-bottom: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
-        .titulo-filtro { font-size: 0.8rem; font-weight: bold; color: #888; text-transform: uppercase; margin-bottom: 15px; display: block; border-left: 3px solid var(--bmw-blue); padding-left: 10px; }
+        .wrapper { max-width: 1100px; margin: 30px auto; padding: 0 20px; }
 
-        /* Grelha de Botões */
-        .grid-botoes { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 10px; margin-bottom: 25px; }
-        .btn-opt { 
-            padding: 15px 5px; border: 1px solid #ddd; background: white; border-radius: 4px; 
-            cursor: pointer; font-weight: bold; font-size: 0.9rem; transition: all 0.2s; text-align: center;
+        .seccao-filtro { background: white; padding: 25px; border-radius: 4px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); margin-bottom: 25px; }
+        .label-filtro { font-size: 0.75rem; font-weight: bold; color: #888; text-transform: uppercase; margin-bottom: 15px; display: block; border-left: 4px solid var(--bmw-blue); padding-left: 12px; }
+
+        /* Grid de Seleção Estilo Matriz */
+        .grid-botoes { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 12px; margin-bottom: 30px; }
+        .btn-selecao { 
+            background: white; border: 1px solid #ccc; padding: 18px 10px; cursor: pointer;
+            font-weight: bold; font-size: 0.85rem; text-align: center; transition: 0.2s; border-radius: 2px;
         }
-        .btn-opt:hover { border-color: var(--bmw-blue); color: var(--bmw-blue); }
-        .btn-opt.ativo { background: var(--bmw-blue); color: white; border-color: var(--bmw-blue); box-shadow: 0 4px 8px rgba(0,102,177,0.3); }
+        .btn-selecao:hover { border-color: var(--bmw-blue); color: var(--bmw-blue); background: #f9f9f9; }
+        .btn-selecao.ativo { background: var(--bmw-blue); color: white; border-color: var(--bmw-blue); }
 
-        /* Resultados */
-        #resultado-lista { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 20px; }
-        .card-viatura { background: white; padding: 20px; border-radius: 8px; border-top: 5px solid var(--bmw-dark); position: relative; transition: 0.3s; }
-        .card-viatura:hover { transform: translateY(-3px); box-shadow: 0 8px 15px rgba(0,0,0,0.1); }
-        .card-viatura h3 { margin: 0 0 15px 0; font-size: 1.3rem; border-bottom: 1px solid #eee; padding-bottom: 10px; }
+        /* Card de Resultado */
+        #resultado { display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 25px; }
+        .card { background: white; padding: 25px; border-radius: 4px; border-top: 6px solid var(--bmw-dark); box-shadow: 0 4px 12px rgba(0,0,0,0.08); display: flex; flex-direction: column; }
+        .card h2 { margin: 0 0 20px 0; font-size: 1.5rem; color: var(--bmw-blue); }
         
-        .resumo-item { display: flex; justify-content: space-between; font-size: 0.9rem; margin-bottom: 6px; }
-        .resumo-label { color: #666; }
-        .resumo-valor { font-weight: bold; }
+        .info-linha { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #eee; font-size: 0.9rem; }
+        .info-label { color: #666; font-weight: 500; }
+        .info-valor { font-weight: bold; }
 
-        .btn-detalhes { 
-            width: 100%; margin-top: 15px; padding: 12px; background: var(--bmw-dark); color: white; 
-            border: none; border-radius: 4px; cursor: pointer; font-weight: bold; text-transform: uppercase; font-size: 0.8rem;
+        .btn-ver-mais { 
+            margin-top: 20px; padding: 14px; background: var(--bmw-dark); color: white; 
+            border: none; font-weight: bold; cursor: pointer; text-transform: uppercase; letter-spacing: 1px;
         }
-        .btn-detalhes:hover { background: var(--bmw-blue); }
+        .btn-ver-mais:hover { background: var(--bmw-blue); }
 
-        /* Modal */
-        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 1000; justify-content: center; align-items: center; }
-        .modal-content { background: white; width: 95%; max-width: 700px; max-height: 90vh; border-radius: 8px; overflow: hidden; display: flex; flex-direction: column; }
+        /* Modal de Especificações */
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 9999; justify-content: center; align-items: center; }
+        .modal-content { background: white; width: 90%; max-width: 600px; max-height: 85vh; border-radius: 4px; overflow: hidden; display: flex; flex-direction: column; }
         .modal-header { padding: 20px; background: var(--bmw-blue); color: white; display: flex; justify-content: space-between; align-items: center; }
-        .modal-body { padding: 0; overflow-y: auto; flex-grow: 1; }
-        .btn-close { background: none; border: none; color: white; font-size: 2rem; cursor: pointer; }
+        .modal-body { padding: 0; overflow-y: auto; }
+        .close { background: none; border: none; color: white; font-size: 2rem; cursor: pointer; }
 
-        .tabela-full { width: 100%; border-collapse: collapse; }
-        .tabela-full tr:nth-child(even) { background: #f9f9f9; }
-        .tabela-full td { padding: 12px 20px; border-bottom: 1px solid #eee; font-size: 0.95rem; }
-        .col-key { font-weight: bold; color: #555; text-transform: uppercase; font-size: 0.7rem; width: 40%; }
-        .col-val { font-weight: bold; text-align: right; }
+        .tabela-specs { width: 100%; border-collapse: collapse; }
+        .tabela-specs td { padding: 14px 20px; border-bottom: 1px solid #eee; font-size: 0.9rem; }
+        .spec-key { font-weight: bold; color: #777; text-transform: uppercase; font-size: 0.7rem; width: 45%; }
+        .spec-val { font-weight: bold; text-align: right; }
 
         .hidden { display: none; }
     </style>
@@ -60,37 +58,37 @@
 <body>
 
 <header>
-    <h1>BMW Technical Data Matrix</h1>
+    <h1>Technical Data Center</h1>
 </header>
 
-<div class="container">
+<div class="wrapper">
     <div class="seccao-filtro">
-        <span class="titulo-filtro">1. Tipo de Motorização</span>
-        <div id="btn-group-categoria" class="grid-botoes">
-            <button class="btn-opt" onclick="selecionarCategoria('BEV')" id="cat-BEV">BEV (Elétrico)</button>
-            <button class="btn-opt" onclick="selecionarCategoria('PHEV')" id="cat-PHEV">PHEV (Híbrido)</button>
-            <button class="btn-opt" onclick="selecionarCategoria('M')" id="cat-M">M Power</button>
+        <span class="label-filtro">1. Selecione a Tecnologia</span>
+        <div id="grupo-categorias" class="grid-botoes">
+            <button class="btn-selecao" onclick="filtrarCat('BEV')" id="cat-BEV">BEV (Elétrico)</button>
+            <button class="btn-selecao" onclick="filtrarCat('PHEV')" id="cat-PHEV">PHEV (Híbrido)</button>
+            <button class="btn-selecao" onclick="filtrarCat('M')" id="cat-M">BMW M</button>
         </div>
 
-        <div id="seccao-chassis" class="hidden">
-            <span class="titulo-filtro">2. Código de Chassis</span>
-            <div id="btn-group-chassis" class="grid-botoes"></div>
+        <div id="bloco-chassis" class="hidden">
+            <span class="label-filtro">2. Selecione o Chassis</span>
+            <div id="grupo-chassis" class="grid-botoes"></div>
         </div>
 
-        <div id="seccao-motorizacao" class="hidden">
-            <span class="titulo-filtro">3. Variante / Motorização</span>
-            <div id="btn-group-motorizacao" class="grid-botoes"></div>
+        <div id="bloco-versoes" class="hidden">
+            <span class="label-filtro">3. Selecione a Motorização</span>
+            <div id="grupo-versoes" class="grid-botoes"></div>
         </div>
     </div>
 
-    <div id="resultado-lista"></div>
+    <div id="resultado"></div>
 </div>
 
-<div id="modal-container" class="modal-overlay">
+<div id="modal" class="modal">
     <div class="modal-content">
         <div class="modal-header">
-            <h2 id="modal-titulo" style="margin:0; font-size: 1.1rem;">Especificações Completas</h2>
-            <button class="btn-close" onclick="fecharModal()">&times;</button>
+            <h3 id="modal-titulo" style="margin:0"></h3>
+            <button class="close" onclick="fecharModal()">&times;</button>
         </div>
         <div id="modal-corpo" class="modal-body"></div>
     </div>
