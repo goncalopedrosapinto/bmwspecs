@@ -1,29 +1,49 @@
 [
-  { "id": "f70-120", "serie": "Série 1", "chassis": "F70", "versao": "120", "motor": "B38A15M2", "combustivel": "Gasolina", "tracao": "Tração Dianteira" },
-  { "id": "g90-m5", "serie": "M5 Berlina", "chassis": "G90", "versao": "M5", "motor": "XB1161T0", "combustivel": "PHEV", "tracao": "Tração Integral" },
-  { "id": "g20-320d", "serie": "Série 3", "chassis": "G20", "versao": "320d", "motor": "B47", "combustivel": "Diesel", "tracao": "Traseira" }
-]
-[
   {
-    "id": "f70-120",
-    "serie": "Série 1",
-    "chassis": "F70",
-    "versao": "120",
-    "motor": "B38A15M2",
-    "combustivel": "Gasolina",
-    "tracao": "Tração Dianteira",
-    "peso_tara": "1425 kg",
-    "aceleracao_0_100": "7.8 s",
-    "binario_nm": "280 Nm"
+    "id": "bev-u11-ix1-20",
+    "categoria": "BEV",
+    "chassis": "U11",
+    "modelo_motorizacao": "iX1 eDrive 20",
+    "potencia_cv": "204",
+    "0_100_km_h": "8.6 s",
+    "tracao": "FWD",
+    "autonomia_km": "430-474",
+    "consumo_kwh_100km": "15,4 - 17,2",
+    "capacidade_bateria_liquida": "64.8 kW",
+    "carregamento_dc_max": "130 kW"
   },
   {
-    "id": "g20-320d",
-    "serie": "Série 3",
-    "chassis": "G20",
-    "versao": "320d",
-    "motor": "B47",
-    "combustivel": "Diesel",
-    "tracao": "Traseira",
-    "caixa": "Automática Steptronic"
+    "id": "phev-g60-550e",
+    "categoria": "PHEV",
+    "chassis": "G60",
+    "modelo_motorizacao": "550e xDrive Berlina",
+    "potencia_combinada_cv": "489",
+    "0_100_km_h": "4.3 s",
+    "tracao": "AWD",
+    "autonomia_puro_eletrico": "83-90 km",
+    "potencia_combustao": "313 cv",
+    "potencia_eletrica": "197 cv"
+  },
+  {
+    "id": "m-g90-m5",
+    "categoria": "M",
+    "chassis": "G90",
+    "modelo_motorizacao": "M5 Berlina",
+    "potencia_cv": "727",
+    "tracao": "M xDrive",
+    "motor_especificacao": "S68 V8 PHEV",
+    "peso_tara_kg": "2440",
+    "0_100_km_h": "3.5 s"
+  },
+  {
+    "id": "m-g87-m2",
+    "categoria": "M",
+    "chassis": "G87",
+    "modelo_motorizacao": "M2 Coupé LCI",
+    "potencia_cv": "480",
+    "0_100_km_h": "4.0 s",
+    "tracao": "RWD",
+    "cilindrada": "2993 cc",
+    "motor": "S58"
   }
 ]
