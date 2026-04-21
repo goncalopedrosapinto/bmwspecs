@@ -3,3 +3,27 @@
   { "id": "g90-m5", "serie": "M5 Berlina", "chassis": "G90", "versao": "M5", "motor": "XB1161T0", "combustivel": "PHEV", "tracao": "Tração Integral" },
   { "id": "g20-320d", "serie": "Série 3", "chassis": "G20", "versao": "320d", "motor": "B47", "combustivel": "Diesel", "tracao": "Traseira" }
 ]
+[
+  {
+    "id": "f70-120",
+    "serie": "Série 1",
+    "chassis": "F70",
+    "versao": "120",
+    "motor": "B38A15M2",
+    "combustivel": "Gasolina",
+    "tracao": "Tração Dianteira",
+    "peso_tara": "1425 kg",
+    "aceleracao_0_100": "7.8 s",
+    "binario_nm": "280 Nm"
+  },
+  {
+    "id": "g20-320d",
+    "serie": "Série 3",
+    "chassis": "G20",
+    "versao": "320d",
+    "motor": "B47",
+    "combustivel": "Diesel",
+    "tracao": "Traseira",
+    "caixa": "Automática Steptronic"
+  }
+]
